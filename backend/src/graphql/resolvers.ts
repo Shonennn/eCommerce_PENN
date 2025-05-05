@@ -1,6 +1,5 @@
 export const resolvers = {
-    Query: {
-      hello: () => 'Hello, Jimmy!',
-    },
-  };
-  
+  Query: {
+    hello: () => 'Hello from Apollo Server!',
+  },
+};
