@@ -31,7 +31,7 @@ export default function ProductsPage() {
         {products.map(p => (
           <li key={p.id}>
             <h3>{p.name}</h3>
-            <img src={`http://localhost:4000${p.imageUrl}`} alt={p.name} width={200} />
+            <img src={`${process.env.NEXT_PUBLIC_IMAGE_BASE}${p.imageUrl}`} alt={p.name} width={200} />
             <p>{p.description}</p>
             <p>${p.price.toFixed(2)}</p>
           </li>
