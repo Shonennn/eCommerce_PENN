@@ -12,28 +12,26 @@ services:
 
   backend:
     build:
-      context: ./backend
+      context: ./ldrvecommerce
     ports:
-      - "4000:4000"
+      - "9000:9000"
+    environment:
+      DATABASE_URL: postgres://ecommerce:secret@database:5432/medusa-ldrvecommerce
     depends_on:
       - postgres
     volumes:
-      - ./backend:/app
-    working_dir: /app
-    command: npx ts-node-dev --respawn src/index.ts
-    environment:
-      - DATABASE_URL=postgres://ecommerce:secret@postgres:5432/ecommerce
+      - ./ldrvecommerce:/app
+    restart: on-failure
+
 
   frontend:
     build:
-      context: ./frontend
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules    # preventing host node_modules cover the one in Docker
+      context: ./ldrvecommerce-storefront
     ports:
-      - "3000:3000"
-      
-    working_dir: /app
-    command: npm run dev
+      - "8000:8000"
     depends_on:
       - backend
+    environment:
+      NEXT_PUBLIC_MEDUSA_BACKEND_URL: http://backend:9000
+    volumes:
+      - ./ldrvecommerce-storefront:/app
